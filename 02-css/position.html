@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .border {
+            border: 1px solid green;
+        }
+
+        .normal {
+            background-color: red;
+        }
+
+        .absolute {
+            position: absolute;
+            /* left: 20px;
+            top: 20px; */
+            background-color: red;
+            padding: 5px;
+        }
+        .relative{
+            position: relative;
+            left:50px;
+            top:50px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="border">I'm in front of you.</p>
+    <div class="normal">Hello</div>
+    <p class="border">I'm next to you.</p>
+
+    <button id="normal">normal</button>
+    <button id="absolute">absolute</button>
+    <button id="relative">relative</button>
+    <button id="fixed">fixed</button>
+    <button id="sticky">sticky</button>
+    <button id="static">static</button>
+
+    <script>
+        var buttons = document.getElementsByTagName('button');
+        for(var i=0;i<buttons.length;i++){
+            buttons[i].onclick = function(){
+                buttons[i].className = buttons[i].innerHTML;
+            }
+        }
+    </script>
+</body>
+
+</html>

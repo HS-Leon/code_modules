@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>节流</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .debounce{
+            background-color: grey;
+            height: 200px;
+            width: 200px;
+            left: 50%;
+            top: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="debounce" id="test">mousemove</div>
+    <script>
+        var el = document.getElementById('test');
+        el.addEventListener('mousemove',throttle(mousemove,2000));
+        function mousemove(){
+            console.log('test')
+        }
+        // 时间戳,最后一次不执行
+        function throttle(func,wait){
+            let previous = 0;
+            return function(){
+                let now = Date.now();
+                let context = this;
+                let args = arguments;
+                if(now - previous > wait){
+                    func.apply(context,args);
+                    previous = now;
+                }
+            }
+        }
+        //定时器
+        function throttle2(func,wait){
+            let timeout;
+            return function(){
+                let context=this;
+                let args = arguments;
+                if(!timeout){
+                    timeout = setTimeout(() => {
+                        timeout = null;
+                        func.apply(context,args);
+                    }, wait);
+                }
+            }
+        }
+        //时间戳+定时器，第一次触发立即响应，结束触发也能响应
+        function throttle3(func,wait){
+            let timer;
+            let previous = 0;
+            return function(){
+                let now = Date.now();
+                let remaining = wait-(now-previous);
+                let context = this;
+                let args = arguments;
+                clearTimeout(timer);
+                if(remaining<=0){
+                    func.apply(context,args);
+                    previous = Date.now();
+                }else{
+                    timer = setTimeout(function(){
+                        func.apply(context,args);
+                    },remaining);
+                    //因为上面添加的clearTimeout.实际这个定时器只有最后一次才会执行
+                }
+            }
+        }
+    </script>
+</body>
+</html>

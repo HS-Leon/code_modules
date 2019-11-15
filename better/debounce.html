@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>防抖</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .debounce{
+            background-color: grey;
+            height: 200px;
+            width: 200px;
+            left: 50%;
+            top: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="debounce" id="test">mousemove</div>
+    <script>
+        var el = document.getElementById('test');
+        el.addEventListener('mousemove',debounce2(mousemove,2000));
+        function mousemove(){
+            console.log('test')
+        }
+        // 非立即执行
+        function debounce(func,wait){
+            let timeout;
+            return function(){
+                let context = this;
+                let _args = arguments;
+                if(timeout) clearTimeout(timeout);
+                timeout=setTimeout(()=>{
+                    func.apply(context,_args);
+                },wait);
+            }
+        }
+        //立即执行
+        function debounce2(func,wait){
+            let timeout;
+            return function(){
+                let context=this;
+                let _args = arguments;
+                if(timeout) clearTimeout(timeout);
+                let callnow = !timeout;
+                timeout = setTimeout(() => {
+                    timeout = null;
+                }, wait);
+                if(callnow) func.apply(context,_args);
+            }
+        }
+    </script>
+</body>
+</html>
